@@ -1,0 +1,21 @@
+class Solution {
+    public int numJewelsInStones(String J, String S) {
+        HashSet<Character> hset = new HashSet<>();
+        
+        char[] jewelArr = J.toCharArray();
+        
+        for(char ch: jewelArr)
+            hset.add(ch);
+        
+        int res = 0;
+        
+        char[] stoneArr = S.toCharArray();
+        
+        for(char ch: stoneArr){
+            if(hset.contains(ch))
+                res++;
+        }
+        
+        return res;
+    }
+}
