@@ -1,0 +1,60 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isCousins(TreeNode root, int x, int y) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while(queue.size()>0){
+            int count = queue.size();
+            
+            //this flag is used to count how many nodes are present in that level which have values x                  and y
+            
+            int flag = 0;
+            while(count>0){
+                TreeNode rp = queue.remove();
+                if(rp.val==x || rp.val==y)
+                    flag++;
+                
+                //this counter is used to check if they got same parent
+                int child = 0;
+                if(rp.left!=null){
+                    queue.add(rp.left);
+                    if(rp.left.val==x || rp.left.val==y)
+                        child++;
+                }
+                if(rp.right!=null){
+                    queue.add(rp.right);
+                    if(rp.right.val==x || rp.right.val==y)
+                        child++;
+                }
+                //both got same parent
+                if(child==2){
+                    return false;
+                }
+            count--;
+            }
+            
+            //flag = 1 means we have got only one match . That means both are in different levels
+            if(flag==1){
+                return false;
+            }else if(flag==2){
+                //we have got both match in same level and they are not even having same parent
+                return true;
+            }
+        }
+    return false;
+    }
+}
