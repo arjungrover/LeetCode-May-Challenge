@@ -1,0 +1,22 @@
+class Solution {
+    public boolean checkStraightLine(int[][] coordinates) {
+        
+        //2 points are always a straight line
+        if(coordinates.length==2)
+            return true;
+        
+        //slope for 2 points
+        double slope = (coordinates[1][1] -coordinates[0][1])*(1.0)/(coordinates[1][0]-coordinates[0][0])*(1.0);
+        
+        //if its a straight line, slope must be equal
+        for(int i = 2;i<coordinates.length;i++){
+            double ls = (coordinates[i][1] - coordinates[i-1][1])*(1.0)/(coordinates[i][0] - coordinates[i-1][0])*(1.0);
+                
+                if(ls!=slope)
+                    return false;
+        }
+        
+        return true;
+        
+    }
+}
