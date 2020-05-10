@@ -1,0 +1,46 @@
+//Approach2 -> 1 hashset and 1 hashmap<integer, Al>
+
+//Approach 1
+class Solution {
+    public int findJudge(int N, int[][] trust) {
+        
+        boolean[][] res = new boolean[N+1][N+1];
+        int ans = -1;
+        
+        //prepare a->b array 
+        for(int i = 0;i<trust.length;i++)
+            res[trust[i][0]][trust[i][1]] = true;
+        
+        
+        for(int i = 1;i<=N;i++){
+            //we will check all columns for each row
+            //1 row should be false as town judge will not trust anybody
+            boolean flag = false;
+            for(int j = 1;j<=N;j++){
+                
+                if(res[i][j]){
+                    flag = true;
+                    continue;
+                }
+                    
+                    
+            }
+            //here we have found that row
+            if(!flag){
+                //check if everryone trusts him
+                //we will check that column. for all rows , it should be true;
+                ans = i;
+                for(int k = 1;k<=N;k++){
+                    //except for that box
+                    if(k==i)
+                        continue;
+                    
+                    if(!res[k][i])
+                       ans = -1;
+                    
+                }
+            }
+        }
+            return ans;
+    }
+}
