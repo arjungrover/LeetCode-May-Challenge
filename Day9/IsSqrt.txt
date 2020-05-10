@@ -1,3 +1,8 @@
+
+//Time complexity O(log n)
+//space complexity O(1)
+
+
 //for handling test case 2147483647 which is INTEGER.MAX_VALUE , We have to take long .
 //for num=0 , ans is false given
 class Solution {
