@@ -1,0 +1,41 @@
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        //For Edge Case
+        if(image[sr][sc]==newColor)
+            return image;
+        
+        //For BFS 
+        Queue<Integer> queue = new LinkedList<>();
+        int totalColumns = image[0].length;
+        int val = image[sr][sc];
+        
+        //Coordinates are converted into 1D point 
+        queue.add((sr*totalColumns+sc));
+        
+        while(queue.size()>0){
+            //1D point is converted back into 2D point
+            int blockNumber = queue.remove();
+            int r = blockNumber/totalColumns;
+            int c = blockNumber%totalColumns;
+            
+            image[r][c] = newColor;
+            
+            //We are adding if its neighbor and its value is equal to val
+            //optimization is done 
+            if(r-1>=0 && image[r-1][c]==val)
+                queue.add((r-1)*totalColumns+c);
+            
+            if(r+1<image.length && image[r+1][c]==val)
+                queue.add((r+1)*totalColumns+c);
+            
+            if(c-1>=0 && image[r][c-1]==val)
+                queue.add(r*totalColumns+(c-1));
+                
+            if(c+1<image[0].length && image[r][c+1]==val)
+                queue.add(r*totalColumns+(c+1));
+            
+        }
+        
+        return image;
+    }
+}
