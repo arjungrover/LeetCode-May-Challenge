@@ -1,0 +1,12 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        //XOR operation can be used
+        //1^0 = 1; 1^1 = 0;
+        //same = 0, different = 1;
+        int res = 0;
+        for(int e: nums)
+            res^=e;
+        
+        return res;
+    }
+}
