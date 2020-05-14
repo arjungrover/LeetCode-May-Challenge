@@ -1,0 +1,45 @@
+class Solution {
+    public String removeKdigits(String num, int k) {
+        //Base cases
+        if(num.length()<=k)
+            return "0";
+        if(k==0)
+            return num;
+        
+        //complexity O(kn) space O(1)
+        for(int i = 0;i<k;i++){
+            boolean flag = false;
+            for(int j = 1;j<num.length();j++){
+                //if decreasing , then big character is removed.   121 -> 11 (2>1)
+                if(num.charAt(j-1)>num.charAt(j)){
+                    //j-1 index remove
+                    num = num.substring(0,j-1)+num.substring(j,num.length());
+                    flag = true;
+                    break;
+                }else
+                    continue;
+            }
+            //last digit remove
+            //12345 -> 1234 (last character is removed)
+            if(!flag)
+                num = num.substring(0,num.length()-1);
+        }
+        //for cases like "0021"->"21"
+        boolean flag = false;
+        for(int ii = 0;ii<num.length();ii++){
+            if(num.charAt(ii)=='0')
+                flag = true;
+            else{
+                // System.out.println("here"+ans+";"+i);
+                return num.substring(ii, num.length());
+            }
+        }
+	//flag for cases like "00" -> "0"
+        if(flag)
+            return "0";
+        
+        return num;
+
+        
+    }
+}

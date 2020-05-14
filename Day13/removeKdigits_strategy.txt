@@ -1,0 +1,24 @@
+Example 1: Suppose the number is 12345 and k is 1. Now we can have below cases:
+Remove 1 — Result will be 2345
+Remove 2 — Result will be 1345
+Remove 3 — Result will be 1245
+Remove 4— Result will be 1235
+Remove 5 — Result will be 1234
+As you can see in this case we get the minimum number when we delete the last digit.
+Now lets consider another example:
+Example 2 : Suppose the number is 12145 and k is 1. Now we can have below cases:
+Remove 1 — Result will be 2145
+Remove 2 — Result will be 1145
+Remove 1 — Result will be 1245
+Remove 4 — Result will be 1215
+Remove 5 — Result will be 1214
+In this case we get the lowest digit if we remove 2 because the number next to it is smaller than 2.
+After observing the two examples we can say that if all the digits are in increasing order than we will delete the last digit , otherwise we will delete a digit for which next digit is smaller.
+Lets consider one more example to get a solid grasp of this:
+Suppose the number is 10354 and k is 2 , that means we need to delete two digits.
+We will start iterating the number and we will see that the number next to 1 is smaller than it. so we will remove 1.
+Now the number becomes 0354. We will again start iterating it from 0.
+3 is greater than 0 so move next
+5 is greater than 3 so move next
+4 is less than 5 so delete 5
+Now the number will become 034. Keep in mind that before returning we need to remove all leading zeroes.
