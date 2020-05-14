@@ -1,0 +1,42 @@
+//BRUTE FORCE APPROACH
+//TLE
+
+class Solution {
+    public String removeKdigits(String num, int k) {
+        String ans = helper(num, k);
+        boolean flag = false;
+        
+	//LOOP for cases like "00201" -> "201
+	for(int i = 0;i<ans.length();i++){
+            if(ans.charAt(i)=='0')
+                flag = true;
+            else{
+                // System.out.println("here"+ans+";"+i);
+                return ans.substring(i, ans.length());
+            }
+        }
+	//flag for cases like "00" -> "0"
+        if(flag)
+            return "0";
+        
+          return ans;      
+            
+    }
+    public String helper(String num, int k){
+        
+        if(k>=num.length())
+            return "0";
+        if(k==0)
+            return num;
+        
+        String res = num;
+        for(int idx = 0;idx<num.length();idx++){
+            
+            String ans = helper((num.substring(0,idx)+num.substring(idx+1,num.length())), k-1 );
+            if(Integer.parseInt(ans)<Integer.parseInt(res))
+                res = ans;
+        }
+        
+        return res;
+    }
+}
