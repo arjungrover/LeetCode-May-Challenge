@@ -1,0 +1,41 @@
+class Solution {
+    public int maxSubarraySumCircular(int[] A) {
+        
+        int res_A = kadane(A);
+        
+        //Unwrapping
+        int sum = 0;
+        for(int i=0;i<A.length;i++){
+            sum+=A[i];
+            A[i]*=-1;
+        }
+        //we are trying to find the sum of two corner cases -> total sum - (middle max sum)
+        sum = sum + kadane(A);
+        
+        if(sum!=0)
+        return Math.max(res_A, sum);
+        
+        //if all numbers are negative , then we will get kadane(A)=-sum which makes sum=0;
+        return res_A;
+        
+    }
+    //Kadane Algorithm
+    public int kadane(int[] newArr){
+        //ideally it should be zero
+        //Maximum Sum for all negative numbers will be 0 ; Empty subarray should be preferred
+        
+        int res = newArr[0];   //Max Sum possible
+        int prev = 0;          //Max Sum So far
+        for(int i = 0;i<newArr.length;i++){
+            //if number should join previous or go alone
+            if(newArr[i]+prev>newArr[i])
+                prev+=newArr[i];
+            else
+                prev = newArr[i];
+            
+            res = Math.max(res, prev);
+        }
+        return res;
+        
+    }
+}
