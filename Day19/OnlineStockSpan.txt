@@ -1,0 +1,28 @@
+class StockSpanner {
+    ArrayList<Integer> stocks;
+    Stack<Integer> stack;
+    
+    public StockSpanner() {
+        stocks = new ArrayList<>();
+        stack = new Stack<>();
+        stack.push(-1);        //default value. //if we have all increasing. then everything will be popped and we cant keep an acoount how many were between if size of stack is zero
+    }
+    
+    public int next(int price) {
+        stocks.add(price);
+        int currIdx = stocks.size()-1;
+        while(stack.size()>1 && stocks.get(stack.peek())<=price){
+            stack.pop();
+        }
+        
+        int prevIdx = stack.peek();
+        stack.push(currIdx);
+        return currIdx-prevIdx;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
