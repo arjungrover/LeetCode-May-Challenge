@@ -1,0 +1,37 @@
+class Solution {
+    public int countSquares(int[][] matrix) {
+        /*
+        temp matrix for counting maxPossibleSize square matrix if that is taken as topLeft corner   for         new big submatrix
+        */
+        int[][] temp = new int[matrix.length][matrix[0].length];
+        int res = 0;    //no. of possible submatrix
+        
+        int r = matrix.length;
+        int c = matrix[0].length;
+        
+        for(int i = r-1;i>=0;i--){
+            
+            for(int j = c-1; j>=0; j--){
+                
+                if(i+1<r && j+1<c && matrix[i][j]==1){
+                  
+            int maxPossible = Math.min(Math.min(temp[i+1][j], temp[i][j+1]), temp[i+1][j+1]);
+            temp[i][j] = maxPossible + 1;
+            
+                    
+                }else{
+                    //boundary
+                    temp[i][j] = matrix[i][j];
+                    
+                }
+                
+                res+=temp[i][j];
+            }
+        }
+        // for(int[] e: temp){
+        //     System.out.println(e[0]+"."+e[1]+"."+e[2]+"."+e[3]);
+        // }
+        
+        return res;
+    }
+}
