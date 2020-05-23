@@ -1,0 +1,42 @@
+class Solution {
+    public class Pair implements Comparable<Pair>{
+        char ch;
+        int freq;
+        
+        Pair(char ch, int freq){
+            this.ch = ch;
+            this.freq = freq;
+        }
+        
+        public int compareTo(Pair o){
+            return this.freq - o.freq;
+        }
+        
+        
+    }
+    public String frequencySort(String s) {
+        HashMap<Character, Integer> fmap = new HashMap<>();
+        char[] carr = s.toCharArray();
+        
+        for(char ch: carr){
+            int val = fmap.getOrDefault(ch, 0) + 1;
+            fmap.put(ch, val);
+        }
+        
+        PriorityQueue<Pair> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(char ch: fmap.keySet()){
+            pq.add(new Pair(ch, fmap.get(ch)));
+        }
+        
+        String res = "";
+        while(pq.size()>0){
+            Pair rp = pq.remove();
+            for(int i=0;i<rp.freq;i++){
+                res+=rp.ch;
+            }
+        }
+        
+        return res;
+    }
+}
