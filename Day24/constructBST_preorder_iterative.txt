@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode bstFromPreorder(int[] preorder) {
+        if(preorder.length==0)
+            return null;
+        
+        Stack<TreeNode> stack = new Stack<>();
+        
+        TreeNode root = new TreeNode(preorder[0]);
+        stack.push(root);
+        
+        int idx = 1;
+        
+        while(idx!=preorder.length){
+            
+           //if number<stack.peek.val ; it means its left child and we will push it
+            if(preorder[idx]<stack.peek().val)
+            {
+                TreeNode node = new TreeNode(preorder[idx]);
+                stack.peek().left = node;
+                stack.push(node);
+                idx++;
+                
+            }else{
+                
+                TreeNode node = null;
+                //pop till number is greater than peek
+                while(stack.size()>0 && stack.peek().val<preorder[idx]){
+                    node = stack.pop();
+                }
+                //number is right child of last popped i.e largest among smallest
+                TreeNode rchild = new TreeNode(preorder[idx]);
+                node.right = rchild;
+                stack.push(rchild);   //we will push that new node now
+                idx++;
+                
+            }
+            
+            
+        }
+        
+        
+        return root;
+    }
+}
