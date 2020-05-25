@@ -1,0 +1,40 @@
+
+
+//FAILED TEST CASE:
+[1,1,2,1,2]
+[1,3,2,3,1].  Expected ; 3
+      	      output: 2
+
+
+class Solution {
+    public int maxUncrossedLines(int[] A, int[] B) {
+        
+        HashMap<Integer, ArrayList<Integer>> hmap = new HashMap<>(); //number vs pos
+        
+        for(int i=0;i<B.length;i++){
+            ArrayList<Integer> ll = hmap.getOrDefault(B[i], new ArrayList<>());
+            ll.add(i);
+            hmap.put(B[i], ll);
+        }
+        
+        int res = 0;
+        int lastIndexMapped = -1;
+        
+        for(int e:A){
+            
+            if(hmap.containsKey(e)){
+                ArrayList<Integer> list = hmap.get(e);
+                for(int k=0;k<list.size();k++){
+                    if(list.get(k)>lastIndexMapped){
+                        lastIndexMapped = list.get(k);
+                        res++;
+                        break;
+                    }
+                }
+            }
+            
+        }
+        
+        return res;
+    }
+}
