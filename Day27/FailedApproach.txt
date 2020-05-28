@@ -1,0 +1,40 @@
+class Solution {
+    public boolean possibleBipartition(int N, int[][] dislikes) {
+        HashSet<Integer> A = new HashSet<>();
+        HashSet<Integer> B = new HashSet<>();
+        
+        for(int[] e: dislikes){
+            
+            int f = e[0];
+            int s = e[1];
+            
+            if((A.contains(f) && A.contains(s)) || (B.contains(f) && B.contains(s)) ){
+                System.out.println(f+"."+s);
+                return false;
+            }else if( (A.contains(f) && B.contains(s)) || (A.contains(s) && B.contains(f)) )
+                continue;
+            else if(A.contains(f))
+                B.add(s);
+            else if(A.contains(s))
+                B.add(f);
+            else if(B.contains(f))
+                A.add(s);
+            else if(B.contains(s))
+                A.add(f);
+            else{
+                //empty hashset
+                //PROBLEM CODE : as A.add(s) + B.add(f) is also possible 
+                //adding of f and s can put an impact later on some code
+                //10
+            //[[4,7],[4,8],[2,8],[8,9],[1,6],[5,8],[1,2],[6,7],[3,10],[8,10],[1,5],[7,10],[1,10],[3,5],             //[3,6],[1,4],[3,9],[2,3],[1,9],[7,9],[2,7],[6,8],[5,7],[3,4]]
+                //expected output is true
+                //our logic is giving false
+                A.add(s);     
+                B.add(f);
+            }
+                
+        }
+        
+        return true;
+    }
+}

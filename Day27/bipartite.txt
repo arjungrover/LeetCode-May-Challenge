@@ -1,0 +1,87 @@
+//Graph component 
+//node without any edge 
+//Graph coloring problem
+
+class Solution {
+    public class Pair{
+        int val;
+        int color;  //1/2
+        
+        Pair(int val, int color){
+            this.val = val;
+            this.color = color;
+        }
+    }
+    public boolean possibleBipartition(int N, int[][] dislikes) {
+         if(dislikes.length==0)
+            return true;    //edge case
+        
+        HashMap<Integer, ArrayList<Integer> > graph = new HashMap<>();
+        
+        for(int[] e: dislikes){
+            ArrayList<Integer> l1 = graph.getOrDefault(e[0], new ArrayList<>());
+            l1.add(e[1]);
+            graph.put(e[0], l1);
+            
+            // System.out.println(graph.get(e[0])+"$$"+graph.get(e[1]));
+            
+            ArrayList<Integer> l2 = graph.getOrDefault(e[1], new ArrayList<>());
+            // System.out.println(l2);
+            l2.add(e[0]);
+            graph.put(e[1], l2);
+            // System.out.println(graph.get(e[0])+"$$"+graph.get(e[1]));
+            
+            // System.out.println(graph.get(e[0])+".."+graph.get(e[1]));
+            
+        }
+        HashMap<Integer, Integer> visited = new HashMap<>();
+        
+        for(int i=1;i<=N;i++){
+            if(!visited.containsKey(i) && graph.containsKey(i)){
+                boolean ans = help(graph, visited, i);
+                if(!ans)
+                    return false;
+            }
+        }
+        
+        return true;
+        
+    }
+    public boolean help(HashMap<Integer, ArrayList<Integer>> graph,HashMap<Integer, Integer> visited, int k){
+        
+        Queue<Pair> queue = new LinkedList<>();
+       
+        // HashMap<Integer, Integer> visited = new HashMap<>();  //val vs color
+        
+        queue.add(new Pair(k,1));
+        
+        while(queue.size()>0){
+            Pair p = queue.remove();
+            
+            if(visited.containsKey(p.val))   //nbr check -> unvisited / visited+opp color
+                continue;                 //if we encounter any visited element-> its valid; we will                                              //continue
+            
+            visited.put(p.val, p.color);   //visited.add
+            
+            //unvisited nbrs add
+            ArrayList<Integer> nbrs = graph.get(p.val);
+            
+            for(int i=0;i<nbrs.size();i++){
+               int key = nbrs.get(i);
+                // System.out.println(key+"."+p.val);
+                if(visited.containsKey(key) && visited.get(key)==p.color)
+                    return false;
+                else if(visited.containsKey(key) && visited.get(key)!=p.color)
+                     continue;
+                else{
+                    
+                    int color = (p.color==1)?2:1;
+                    
+                    queue.add(new Pair(key, color));
+                }
+            }
+            
+        }
+        return true;
+    }
+}
