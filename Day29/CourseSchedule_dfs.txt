@@ -1,0 +1,54 @@
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        HashMap<Integer, ArrayList<Integer> > graph = new HashMap<>();
+        HashSet<Integer> visited = new HashSet<>();
+       
+            
+        for(int i=0;i<numCourses;i++){
+            
+            graph.put(i, new ArrayList<>());
+        }
+        
+        for(int[] e: prerequisites){
+            ArrayList<Integer> nbrs = graph.get(e[1]);  //[0,1] -> 1->0
+            nbrs.add(e[0]);
+            graph.put(e[1], nbrs);
+        }
+        
+        for(int i=0;i<numCourses;i++){
+            if(!visited.contains(i)){
+                boolean ans = dfs(graph, visited, new HashSet<>(), i);
+                if(!ans)
+                    return false;
+            }
+        }
+        
+        return true;
+        
+    }
+    public boolean dfs(HashMap<Integer, ArrayList<Integer> > graph, HashSet<Integer> visited, HashSet<Integer> stack, int sp){
+        
+        if(stack.contains(sp))
+            return false;
+        
+        if(visited.contains(sp))
+            return true;
+        
+        visited.add(sp);
+        stack.add(sp);
+        
+        ArrayList<Integer> nbrs = graph.get(sp);
+        
+        for(int i=0;i<nbrs.size();i++){
+            
+           boolean ans = dfs(graph, visited, stack, nbrs.get(i));
+           if(!ans)
+                return false;
+        }
+        
+        stack.remove(sp);
+        
+        return true;
+        
+    }
+}
